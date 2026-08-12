@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TFA Football Simulator & Management Platform</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { background-color: #0b0f19; color: #f3f4f6; font-family: ui-sans-serif, system-ui, sans-serif; }
+    .glass { background: rgba(17, 24, 39, 0.8); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); }
+    .accent-glow { box-shadow: 0 0 20px rgba(59, 130, 246, 0.3); }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+  <!-- TOP NAVIGATION BAR -->
+  <header class="glass sticky top-0 z-50 px-6 py-4 flex items-center justify-between border-b border-gray-800">
+    <div class="flex items-center space-x-3">
+      <div class="w-10 h-10 rounded-lg bg-blue-600 flex items-center justify-center font-bold text-xl accent-glow">TFA</div>
+      <div>
+        <h1 class="font-bold text-lg leading-tight">TFA Platform</h1>
+        <p class="text-xs text-gray-400">TESL Champions League & eFootball Cup Engine</p>
+      </div>
+    </div>
+    <div class="flex items-center space-x-4">
+      <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+        <span class="w-2 h-2 rounded-full bg-emerald-400 mr-2 animate-pulse"></span> Engine Online
+      </span>
+      <button onclick="switchTab('simulator')" class="bg-blue-600 hover:bg-blue-500 px-4 py-2 rounded-lg text-sm font-semibold transition">Launch Simulator</button>
+    </div>
+  </header>
+
+  <!-- MAIN CONTAINER -->
+  <main class="flex-1 max-w-7xl w-full mx-auto p-6 space-y-8">
+
+    <!-- NAVIGATION TABS -->
+    <div class="flex border-b border-gray-800 space-x-8 text-sm font-medium">
+      <button id="tab-standings" onclick="switchTab('standings')" class="pb-4 text-blue-400 border-b-2 border-blue-500 font-semibold">TCL Standings & Clubs</button>
+      <button id="tab-market" onclick="switchTab('market')" class="pb-4 text-gray-400 hover:text-gray-200 transition">Transfer Market (TCP)</button>
+      <button id="tab-simulator" onclick="switchTab('simulator')" class="pb-4 text-gray-400 hover:text-gray-200 transition">Match Simulator</button>
+      <button id="tab-tfc" onclick="switchTab('tfc')" class="pb-4 text-gray-400 hover:text-gray-200 transition">TFC Standalone Cup</button>
+    </div>
+
+    <!-- TAB 1: TCL STANDINGS & CLUBS -->
+    <section id="sec-standings" class="space-y-6">
+      <div class="flex justify-between items-center">
+        <h2 class="text-2xl font-bold">TESL Champions League Table</h2>
+        <span class="text-sm text-gray-400">Season 1 • Active Treasury: <strong class="text-blue-400">250 TCP</strong></span>
+      </div>
+
+      <div class="glass rounded-xl overflow-hidden">
+        <table class="w-full text-left border-collapse">
+          <thead>
+            <tr class="bg-gray-800/50 text-gray-400 text-xs uppercase tracking-wider border-b border-gray-800">
+              <th class="p-4">Pos</th>
+              <th class="p-4">Club Name</th>
+              <th class="p-4">Squad Size</th>
+              <th class="p-4">TCP Balance</th>
+              <th class="p-4">Status</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-800/50 text-sm">
+            <tr class="hover:bg-gray-800/30 transition">
+              <td class="p-4 font-bold text-amber-400">1</td>
+              <td class="p-4 font-semibold">Phoenix FC</td>
+              <td class="p-4">25 Players</td>
+              <td class="p-4 font-mono text-emerald-400">1,250 TCP</td>
+              <td class="p-4"><span class="px-2 py-1 rounded text-xs bg-emerald-500/10 text-emerald-400">Active</span></td>
+            </tr>
+            <tr class="hover:bg-gray-800/30 transition">
+              <td class="p-4 font-bold text-gray-300">2</td>
+              <td class="p-4 font-semibold">Vanguard United</td>
+              <td class="p-4">25 Players</td>
+              <td class="p-4 font-mono text-emerald-400">1,100 TCP</td>
+              <td class="p-4"><span class="px-2 py-1 rounded text-xs bg-emerald-500/10 text-emerald-400">Active</span></td>
+            </tr>
+            <tr class="hover:bg-gray-800/30 transition">
+              <td class="p-4 font-bold text-amber-600">3</td>
+              <td class="p-4 font-semibold">Titans City</td>
+              <td class="p-4">25 Players</td>
+              <td class="p-4 font-mono text-emerald-400">950 TCP</td>
+              <td class="p-4"><span class="px-2 py-1 rounded text-xs bg-emerald-500/10 text-emerald-400">Active</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- TAB 2: TRANSFER MARKET -->
+    <section id="sec-market" class="space-y-6 hidden">
+      <div class="flex justify-between items-center">
+        <h2 class="text-2xl font-bold">Transfer Market & Bidding Pool</h2>
+        <span class="text-sm text-gray-400">Waiver Wire • 48h Window Active</span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="glass p-6 rounded-xl space-y-4">
+          <div class="flex justify-between items-start">
+            <div>
+              <span class="text-xs px-2 py-0.5 rounded bg-blue-500/20 text-blue-400 font-bold">Category A</span>
+              <h3 class="font-bold text-lg mt-1">E. Haaland</h3>
+              <p class="text-xs text-gray-400">Forward • MSV 30 TCP</p>
+            </div>
+            <span class="text-sm font-mono text-emerald-400 bg-emerald-500/10 px-2 py-1 rounded">Min: 30 TCP</span>
+          </div>
+          <button onclick="alert('Bid Submitted via Backend Ledger!')" class="w-full bg-blue-600 hover:bg-blue-500 py-2 rounded-lg font-semibold text-sm transition">Submit Waiver Claim</button>
+        </div>
+
+        <div class="glass p-6 rounded-xl space-y-4">
+          <div class="flex justify-between items-start">
+            <div>
+              <span class="text-xs px-2 py-0.5 rounded bg-purple-500/20 text-purple-400 font-bold">Category B</span>
+              <h3 class="font-bold text-lg mt-1">K. De Bruyne</h3>
+              <p class="text-xs text-gray-400">Midfield • MSV 25 TCP</p>
+            </div>
+            <span class="text-sm font-mono text-emerald-400 bg-emerald-500/10 px-2 py-1 rounded">Min: 25 TCP</span>
+          </div>
+          <button onclick="alert('Bid Submitted via Backend Ledger!')" class="w-full bg-blue-600 hover:bg-blue-500 py-2 rounded-lg font-semibold text-sm transition">Submit Waiver Claim</button>
+        </div>
+
+        <div class="glass p-6 rounded-xl space-y-4">
+          <div class="flex justify-between items-start">
+            <div>
+              <span class="text-xs px-2 py-0.5 rounded bg-amber-500/20 text-amber-400 font-bold">Category C</span>
+              <h3 class="font-bold text-lg mt-1">V. van Dijk</h3>
+              <p class="text-xs text-gray-400">Defender • MSV 20 TCP</p>
+            </div>
+            <span class="text-sm font-mono text-emerald-400 bg-emerald-500/10 px-2 py-1 rounded">Min: 20 TCP</span>
+          </div>
+          <button onclick="alert('Bid Submitted via Backend Ledger!')" class="w-full bg-blue-600 hover:bg-blue-500 py-2 rounded-lg font-semibold text-sm transition">Submit Waiver Claim</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 3: MATCH SIMULATOR -->
+    <section id="sec-simulator" class="space-y-6 hidden">
+      <h2 class="text-2xl font-bold">Deterministic Match Simulator</h2>
+
+      <div class="glass p-6 rounded-xl grid grid-cols-1 md:grid-cols-3 gap-6 items-center text-center">
+        <div class="space-y-2">
+          <h3 class="font-bold text-xl text-blue-400">Phoenix FC</h3>
+          <p class="text-xs text-gray-400">Attack: 88 | Midfield: 85 | Defense: 84</p>
+        </div>
+        <div class="space-y-3">
+          <div id="sim-score" class="text-4xl font-extrabold font-mono tracking-widest bg-gray-900 py-3 rounded-lg border border-gray-800">0 - 0</div>
+          <button onclick="runSimulation()" class="w-full bg-emerald-600 hover:bg-emerald-500 py-2 rounded-lg font-bold text-sm transition accent-glow">Simulate 90 Mins</button>
+        </div>
+        <div class="space-y-2">
+          <h3 class="font-bold text-xl text-purple-400">Vanguard United</h3>
+          <p class="text-xs text-gray-400">Attack: 86 | Midfield: 87 | Defense: 82</p>
+        </div>
+      </div>
+
+      <div id="sim-events" class="glass p-6 rounded-xl space-y-3 max-h-60 overflow-y-auto text-sm text-gray-300">
+        <p class="text-gray-500 text-center italic">Click "Simulate 90 Mins" to run the deterministic match engine...</p>
+      </div>
+    </section>
+
+    <!-- TAB 4: TFC STANDALONE CUP -->
+    <section id="sec-tfc" class="space-y-6 hidden">
+      <h2 class="text-2xl font-bold">TESL eFootball Cup (TFC)</h2>
+      <p class="text-gray-400 text-sm">Standalone Authentic Mode Competition. Independent of TCL Contracts and TCP Financial Systems.</p>
+      <div class="glass p-8 rounded-xl text-center space-y-4 border border-dashed border-gray-700">
+        <p class="text-gray-300">Registration for TFC Season 1 is currently open.</p>
+        <button onclick="alert('Registration request sent!')" class="bg-blue-600 hover:bg-blue-500 px-6 py-2 rounded-lg font-semibold text-sm transition">Register Team</button>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="glass mt-auto py-4 text-center text-xs text-gray-500 border-t border-gray-800">
+    TFA Football Simulator & Management Platform • Built according to TFA Constitution (First Edition)
+  </footer>
+
+  <script>
+    function switchTab(tab) {
+      ['standings', 'market', 'simulator', 'tfc'].forEach(t => {
+        document.getElementById('sec-' + t).classList.add('hidden');
+        document.getElementById('tab-' + t).className = 'pb-4 text-gray-400 hover:text-gray-200 transition';
+      });
+      document.getElementById('sec-' + tab).classList.remove('hidden');
+      document.getElementById('tab-' + tab).className = 'pb-4 text-blue-400 border-b-2 border-blue-500 font-semibold';
+    }
+
+    function runSimulation() {
+      const eventsBox = document.getElementById('sim-events');
+      const scoreBox = document.getElementById('sim-score');
+      eventsBox.innerHTML = '';
+      
+      const homeScore = Math.floor(Math.random() * 4);
+      const awayScore = Math.floor(Math.random() * 3);
+      
+      scoreBox.innerText = `${homeScore} - ${awayScore}`;
+
+      const logs = [
+        "0' Match Kickoff at Central Stadium.",
+        `14' Chance! Phoenix FC shot saved by goalkeeper.`,
+        `32' Goal! Phoenix FC strikes into the bottom corner.`,
+        `67' Yellow Card issued for tactical foul in midfield.`,
+        `89' Goal! Vanguard United converts from a corner kick.`,
+        `90' Full Time! Final Score: ${homeScore} - ${awayScore}. Payout calculated (+25 TCP awarded to Winner).`
+      ];
+
+      logs.forEach(msg => {
+        const p = document.createElement('p');
+        p.innerText = msg;
+        eventsBox.appendChild(p);
+      });
+    }
+  </script>
+</body>
+</html>
