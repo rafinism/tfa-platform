@@ -6,6 +6,9 @@
   "scripts": {
     "start": "node server.js"
   },
+  "prisma": {
+    "seed": "node prisma/seed.js"
+  },
   "dependencies": {
     "@fastify/cors": "^8.5.0",
     "@fastify/jwt": "^8.0.0",
