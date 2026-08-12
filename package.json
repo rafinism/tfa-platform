@@ -1,0 +1,19 @@
+{
+  "name": "tfa-platform-engine",
+  "version": "1.0.0",
+  "description": "TFA Engine Server",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "@fastify/cors": "^8.5.0",
+    "@fastify/jwt": "^8.0.0",
+    "@prisma/client": "^5.10.0",
+    "bcrypt": "^5.1.1",
+    "dotenv": "^16.4.5",
+    "fastify": "^4.26.0",
+    "prisma": "^5.10.0",
+    "zod": "^3.22.4"
+  }
+}
