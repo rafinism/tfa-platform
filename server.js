@@ -3,24 +3,22 @@ const cors = require('@fastify/cors');
 const jwt = require('@fastify/jwt');
 const { PrismaClient } = require('@prisma/client');
 const bcrypt = require('bcrypt');
+const path = require('path');
+const fs = require('fs');
 
 const prisma = new PrismaClient();
 
 fastify.register(cors, { origin: true });
 fastify.register(jwt, { secret: process.env.JWT_SECRET || 'supersecret_tfa_key' });
 
-// Authenticate Middleware
-fastify.decorate("authenticate", async function (request, reply) {
-  try {
-    await request.jwtVerify();
-  } catch (err) {
-    reply.status(401).send({ error: "Unauthorized access" });
+// Serve Visual Website (index.html)
+fastify.get('/', async (request, reply) => {
+  const htmlPath = path.join(__dirname, 'index.html');
+  if (fs.existsSync(htmlPath)) {
+    const html = fs.readFileSync(htmlPath, 'utf8');
+    return reply.type('text/html').send(html);
   }
-});
-
-// Public Home Route
-fastify.get('/', async () => {
-  return { status: 'ONLINE', platform: 'TFA Football Simulator & Management Platform Engine' };
+  return { status: 'ONLINE', platform: 'TFA Simulator Engine' };
 });
 
 // Healthcheck Route
